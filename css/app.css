@@ -1,0 +1,95 @@
+/* "Machine room" theme: glacier teal, gauge amber, cool blue-gray neutrals.
+   All the exam flavor lives in the token blocks below, including the
+   --track-texture pressure-gauge tick scale and the --track-marker recovery
+   cylinder on the progress bar; retheme a fork by editing the tokens,
+   nothing structural.
+   Light/dark follows prefers-color-scheme unless the Settings theme override
+   sets data-theme="light"/"dark" on <html>. The dark token block therefore
+   appears twice: once for system-dark (unless overridden to light), once for
+   the explicit dark override. Keep the two copies identical. */
+:root {
+  --bg: #edf3f5;
+  --card: #ffffff;
+  --text: #14262e;
+  --muted: #56707b;
+  --accent: #0e6d8c;
+  --accent-hi: #0a566f;
+  --accent-text: #ffffff;
+  --nav-bg: #0e6d8c;
+  --nav-text: #e3f2f8;
+  --accent2: #e2922d;
+  --accent2-text: #241503;
+  --border: #d2dfe4;
+  --ok: #178a5c;
+  --ok-bg: #e3f1ea;
+  --bad: #b23a2a;
+  --bad-bg: #f7e9e4;
+  --warn: #b45309;
+  --surface-dark: #24333b;
+  --shadow: 0 1px 2px rgba(16, 34, 42, 0.07), 0 4px 16px rgba(16, 34, 42, 0.05);
+  /* Pressure-gauge scale ticked across the progress track: two minor ticks,
+     then a wider major one, like the face of a manifold gauge. References
+     --accent2, so it follows the dark palette on its own; set to `none` for
+     a plain track. Defined once here since both dark blocks would keep it. */
+  --track-texture: repeating-linear-gradient(90deg,
+    transparent 0 7px, var(--accent2) 7px 9px, transparent 9px 16px,
+    var(--accent2) 16px 18px, transparent 18px 25px,
+    var(--accent2) 25px 28.5px);
+  /* Refrigerant recovery cylinder rolling along the gauge scale at the
+     leading edge of the progress fill. Inline SVG rather than an emoji:
+     emoji glyphs come from whatever emoji font the visitor has (or hasn't)
+     installed, and on Linux the marker rendered tiny or not at all. Pale
+     ice blue, deliberately NOT the gauge amber of the tick texture, so the
+     cylinder reads against the ticks instead of blending into them; the
+     color is baked into the data URI, so the dark blocks carry their own
+     copy. The clearance keeps the 18px marker and its 3px gap inside the
+     layout at 100%. */
+  --track-marker: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"><g fill="%23e8f4fa"><rect x="6.2" y="0.5" width="5.6" height="1.6" rx="0.8"/><rect x="8.1" y="1.8" width="1.8" height="2.6"/><path d="M4.5 8.5 a4.5 4.5 0 0 1 9 0 v6.2 a2.3 2.3 0 0 1 -2.3 2.3 h-4.4 a2.3 2.3 0 0 1 -2.3 -2.3 Z"/></g></svg>');
+  --track-marker-clearance: 21px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e1519;
+    --card: #162228;
+    --text: #e2edf1;
+    --muted: #93aab4;
+    --accent: #4db3d4;
+    --accent-hi: #6cc4e1;
+    --accent-text: #06222d;
+    --nav-bg: #123a4a;
+    --nav-text: #d9edf5;
+    --accent2: #eda746;
+    --accent2-text: #221503;
+    --border: #24343d;
+    --ok: #45c08c;
+    --ok-bg: #122d24;
+    --bad: #f0836c;
+    --bad-bg: #35211c;
+    --warn: #e5a44e;
+    --surface-dark: #0a1013;
+    --shadow: none;
+    --track-marker: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"><g fill="%23d7ecf7"><rect x="6.2" y="0.5" width="5.6" height="1.6" rx="0.8"/><rect x="8.1" y="1.8" width="1.8" height="2.6"/><path d="M4.5 8.5 a4.5 4.5 0 0 1 9 0 v6.2 a2.3 2.3 0 0 1 -2.3 2.3 h-4.4 a2.3 2.3 0 0 1 -2.3 -2.3 Z"/></g></svg>');
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e1519;
+  --card: #162228;
+  --text: #e2edf1;
+  --muted: #93aab4;
+  --accent: #4db3d4;
+  --accent-hi: #6cc4e1;
+  --accent-text: #06222d;
+  --nav-bg: #123a4a;
+  --nav-text: #d9edf5;
+  --accent2: #eda746;
+  --accent2-text: #221503;
+  --border: #24343d;
+  --ok: #45c08c;
+  --ok-bg: #122d24;
+  --bad: #f0836c;
+  --bad-bg: #35211c;
+  --warn: #e5a44e;
+  --surface-dark: #0a1013;
+  --shadow: none;
+  --track-marker: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"><g fill="%23d7ecf7"><rect x="6.2" y="0.5" width="5.6" height="1.6" rx="0.8"/><rect x="8.1" y="1.8" width="1.8" height="2.6"/><path d="M4.5 8.5 a4.5 4.5 0 0 1 9 0 v6.2 a2.3 2.3 0 0 1 -2.3 2.3 h-4.4 a2.3 2.3 0 0 1 -2.3 -2.3 Z"/></g></svg>');
+}

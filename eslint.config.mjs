@@ -1,0 +1,128 @@
+import js from '@eslint/js';
+import globals from 'globals';
+
+export default [
+  { ignores: ['node_modules/'] },
+  js.configs.recommended,
+  {
+    // Browser scripts loaded via <script> tags. These files define one shared
+    // global each (QUESTION_BANK, FSRS, Store), consumed by js/app.js;
+    // storage.js reads its localStorage key out of EXAM_CONFIG.
+    files: ['js/fsrs.js', 'js/storage.js', 'data/questions.js', 'data/cfr-anchors.js',
+      'data/app-assets.js'],
+    languageOptions: {
+      sourceType: 'script',
+      globals: { ...globals.browser, EXAM_CONFIG: 'readonly' },
+    },
+    rules: {
+      'no-unused-vars': ['error', { varsIgnorePattern: '^(FSRS|Store|QUESTION_BANK|CFR608_ANCHORS|CFR609_ANCHORS|AIM_ANCHORS|APP_ASSETS)$' }],
+    },
+  },
+  {
+    // Same, but readiness.js reads the FSRS global rather than defining it,
+    // and takes its pass mark from EXAM_CONFIG when that is loaded.
+    files: ['js/readiness.js'],
+    languageOptions: {
+      sourceType: 'script',
+      globals: { ...globals.browser, FSRS: 'readonly', EXAM_CONFIG: 'readonly' },
+    },
+    rules: {
+      'no-unused-vars': ['error', { varsIgnorePattern: '^Readiness$' }],
+    },
+  },
+  {
+    // The exam config loads after the two data files and may read both.
+    files: ['data/exam-config.js'],
+    languageOptions: {
+      sourceType: 'script',
+      globals: { ...globals.browser, QUESTION_BANK: 'readonly', CFR608_ANCHORS: 'readonly', CFR609_ANCHORS: 'readonly', AIM_ANCHORS: 'readonly' },
+    },
+    rules: {
+      'no-unused-vars': ['error', { varsIgnorePattern: '^EXAM_CONFIG$' }],
+    },
+  },
+  {
+    files: ['js/app.js'],
+    languageOptions: {
+      sourceType: 'script',
+      globals: {
+        ...globals.browser,
+        QUESTION_BANK: 'readonly',
+        EXAM_CONFIG: 'readonly',
+        FSRS: 'readonly',
+        Readiness: 'readonly',
+        Store: 'readonly',
+      },
+    },
+  },
+  {
+    // Documentation tooling: injected into a throwaway copy of index.html by
+    // docs/screenshots/generate.sh, never part of the app.
+    files: ['docs/screenshots/seed.js'],
+    languageOptions: {
+      sourceType: 'script',
+      globals: { ...globals.browser, QUESTION_BANK: 'readonly', EXAM_CONFIG: 'readonly' },
+    },
+  },
+  {
+    // APP_ASSETS comes from data/app-assets.js via importScripts.
+    files: ['sw.js'],
+    languageOptions: {
+      sourceType: 'script',
+      globals: { ...globals.serviceworker, APP_ASSETS: 'readonly' },
+    },
+  },
+  {
+    // Node scripts run by hand to regenerate committed data files.
+    files: ['tools/**/*.js'],
+    languageOptions: { sourceType: 'commonjs', globals: { ...globals.node } },
+  },
+  {
+    // The Playwright harness: node-side runner files that also carry snippets
+    // executed in the page via page.evaluate, so both global sets apply.
+    files: ['tests/*.mjs'],
+    languageOptions: {
+      sourceType: 'module',
+      globals: { ...globals.node, ...globals.browser },
+    },
+  },
+  {
+    files: ['tests/**/*.js'],
+    languageOptions: {
+      sourceType: 'commonjs',
+      globals: {
+        ...globals.node,
+        QUESTION_BANK: 'readonly', CFR608_ANCHORS: 'readonly', CFR609_ANCHORS: 'readonly',
+        AIM_ANCHORS: 'readonly', EXAM_CONFIG: 'readonly', FSRS: 'readonly', Readiness: 'readonly',
+      },
+    },
+  },
+  {
+    // The pre-boot session plant runs inside tests/test.html before app.js
+    // and defines AOTA for the suite.
+    files: ['tests/plant-session.js'],
+    languageOptions: {
+      sourceType: 'script',
+      globals: { ...globals.browser, QUESTION_BANK: 'readonly', EXAM_CONFIG: 'readonly' },
+    },
+    rules: {
+      'no-unused-vars': ['error', { varsIgnorePattern: '^AOTA$' }],
+    },
+  },
+  {
+    // The engine browser suite runs inside tests/test.html against the real app.
+    files: ['tests/engine-suite.js'],
+    languageOptions: {
+      sourceType: 'script',
+      globals: {
+        ...globals.browser,
+        QUESTION_BANK: 'readonly', EXAM_CONFIG: 'readonly',
+        FSRS: 'readonly', Readiness: 'readonly', Store: 'readonly',
+        AOTA: 'readonly',
+      },
+    },
+    rules: {
+      'no-unused-vars': ['error', { varsIgnorePattern: '^TestSuite$' }],
+    },
+  },
+];
