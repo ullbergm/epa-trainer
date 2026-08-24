@@ -2,13 +2,13 @@
   <!-- Keep the artwork inside the center 80% so the maskable variant crops safely.
        icon-maskable-512.png is this file rendered with rx="0": the mask shape comes
        from the launcher, so the background must bleed to the edges. -->
-  <rect width="512" height="512" rx="96" fill="#0e6d8c"/>
+  <rect width="512" height="512" rx="96" fill="#a52e5e"/>
   <!-- Recovery cylinder: handwheel, valve stem, dome-topped tank -->
   <rect x="198" y="70" width="116" height="30" rx="15" fill="#ffffff"/>
   <rect x="240" y="92" width="32" height="52" fill="#ffffff"/>
   <path d="M156 240 a100 100 0 0 1 200 0 v146 a52 52 0 0 1 -52 52 h-96 a52 52 0 0 1 -52 -52 Z" fill="#ffffff"/>
   <!-- Snowflake stamped on the tank -->
-  <g stroke="#0e6d8c" stroke-width="18" stroke-linecap="round">
+  <g stroke="#a52e5e" stroke-width="18" stroke-linecap="round">
     <line x1="256" y1="232" x2="256" y2="368"/>
     <line x1="197" y1="266" x2="315" y2="334"/>
     <line x1="197" y1="334" x2="315" y2="266"/>
@@ -17,5 +17,5 @@
     <line x1="256" y1="368" x2="238" y2="350"/>
     <line x1="256" y1="368" x2="274" y2="350"/>
   </g>
-  <circle cx="256" cy="300" r="16" fill="#0e6d8c"/>
+  <circle cx="256" cy="300" r="16" fill="#a52e5e"/>
 </svg>
