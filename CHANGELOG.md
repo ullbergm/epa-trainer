@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.2.0](https://github.com/ullbergm/epa-trainer/compare/v1.1.0...v1.2.0) (2026-08-28)
+
+
+### Features
+
+* **engine:** let a config name the tests a fresh install starts on ([3f17452](https://github.com/ullbergm/epa-trainer/commit/3f174522af1b17ccb7c4f353dc52c4cde949d391))
+
+
+### Bug Fixes
+
+* sync trainer-engine v2.3.0 ([3f17452](https://github.com/ullbergm/epa-trainer/commit/3f174522af1b17ccb7c4f353dc52c4cde949d391))
+
 ## [1.1.0](https://github.com/ullbergm/epa-trainer/compare/v1.0.0...v1.1.0) (2026-08-24)
 
 
